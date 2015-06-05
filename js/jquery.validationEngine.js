@@ -1045,23 +1045,8 @@
 				}
 			});
 			if(!isValid) {
-				return options.allrules[rules[i]].alertText;
-			}
-		},
-		_groupErrorRequired: function(field, rules, i, options) {
-			var classGroup = "["+options.validateAttribute+"*=" +rules[i + 1] +"]";
-			var isValid = false;
-			var count = 0;
-			// Check all fields from the group
-			field.closest("form, .validationEngineContainer").find(classGroup).each(function(){
-				if($(this).prev('.formError')[0]) {
-					idValid = true;
-					// return false;
-				}
-			});
-			if(!isValid) {
-				return options.allrules[rules[i]].alertText;
-			}
+		  return options.allrules[rules[i]].alertText;
+		}
 		},
 		/**
 		* Validate rules
