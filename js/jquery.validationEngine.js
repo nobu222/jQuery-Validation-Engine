@@ -623,6 +623,37 @@
 						if(errorMsg)  required = true;
 						options.showArrow = false;
 						break;
+					// グループ単位のエラー表示
+					case "group":
+						// get group elements
+						var fieldErrorMsg,groupErrorMsg = [];
+						var classGroup = "["+options.validateAttribute+"*=" +rules[i + 1] +"]";
+						var classFields = form.find(classGroup);
+						var groupRules = options.group[rules[i + 1]].split(/\[|,|\]/);
+
+						classFields.each(function(index, el) {
+							var rurles = groupRules.slice(0);
+							for (var i = 0; i < rurles.length; i++) {
+								if (typeof(methods["_"+rurles[i]]) == "function") {
+									fieldErrorMsg = methods._getErrorMessage(form, $(this), rurles[i], rurles, i, options, methods["_"+rurles[i]])
+									if (typeof fieldErrorMsg != "undefined") {
+										groupErrorMsg.push(fieldErrorMsg);
+										delete(groupRules[i]);
+
+										if(rurles[i] == "required") required = true;
+									};
+								};
+							};
+
+							if (field[0] == $(this)[0]) {return false};
+						});
+
+						if (groupErrorMsg != "") {
+							errorMsg = groupErrorMsg.slice(0);
+						}
+						field = classFields.eq(0);
+
+						break;
 					case "ajax":
 						// AJAX defaults to returning it's loading message
 						errorMsg = methods._ajax(field, rules, i, options);
@@ -741,6 +772,14 @@
 					break;
 				}
 
+				// group errorMsg
+				if (typeof errorMsg == 'object' && Array.isArray(errorMsg)) {
+					for (var i = 0; i < errorMsg.length; i++) {
+						promptText += errorMsg[i] + "<br/>";
+					};
+					options.isError = true;
+					field_errors++;
+				}
 				// If we have a string, that means that we have an error, so add it to the error message.
 				if (typeof errorMsg == 'string') {
 					promptText += errorMsg + "<br/>";
@@ -771,7 +810,6 @@
 			if(field.is(":hidden") && options.prettySelect) {
 				field = form.find("#" + options.usePrefix + methods._jqSelector(field.attr('id')) + options.useSuffix);
 			}
-
 			if (options.isError && options.showPrompts){
 				methods._showPrompt(field, promptText, promptType, false, options);
 			}else{
@@ -854,7 +892,6 @@
 			 }
 			 // Change the rule to the composite rule, if it was different from the original
 			 var alteredRule = rule;
-
 
 			 var element_classes = (field.attr("data-validation-engine")) ? field.attr("data-validation-engine") : field.attr("class");
 			 var element_classes_array = element_classes.split(" ");
@@ -999,6 +1036,7 @@
 		_groupRequired: function(field, rules, i, options) {
 			var classGroup = "["+options.validateAttribute+"*=" +rules[i + 1] +"]";
 			var isValid = false;
+			var count = 0;
 			// Check all fields from the group
 			field.closest("form, .validationEngineContainer").find(classGroup).each(function(){
 				if(!methods._required($(this), rules, i, options)){
@@ -1006,10 +1044,24 @@
 					return false;
 				}
 			});
-
 			if(!isValid) {
-		  return options.allrules[rules[i]].alertText;
-		}
+				return options.allrules[rules[i]].alertText;
+			}
+		},
+		_groupErrorRequired: function(field, rules, i, options) {
+			var classGroup = "["+options.validateAttribute+"*=" +rules[i + 1] +"]";
+			var isValid = false;
+			var count = 0;
+			// Check all fields from the group
+			field.closest("form, .validationEngineContainer").find(classGroup).each(function(){
+				if($(this).prev('.formError')[0]) {
+					idValid = true;
+					// return false;
+				}
+			});
+			if(!isValid) {
+				return options.allrules[rules[i]].alertText;
+			}
 		},
 		/**
 		* Validate rules
@@ -2125,7 +2177,9 @@
 	 // Custom ID uses suffix
 	 useSuffix: "",
 	 // Only show one message per error prompt
-	 showOneMessage: false
+	 showOneMessage: false,
+	 // group setting
+	 group: {}
 	}};
 	$(function(){$.validationEngine.defaults.promptPosition = methods.isRTL()?'topLeft':"topRight"});
 })(jQuery);
