@@ -28,18 +28,14 @@
                     "alertText": "* ",
                     "alertText2": "文字以上にしてください"
                 },
-                "groupRequired": {
+				"groupRequired": {
                     "regex": "none",
-                    "alertText": "* 必須項目です"
-                },
-				"groupErrorRequired": {
-                    "regex": "none",
-                    "alertText": "* 必須項目です"
+                    "alertText": "* You must fill one of the following fields"
                 },
                 "maxSize": {
                     "regex": "none",
                     "alertText": "* ",
-                    "alertText2": "文字以内でご入力ください"
+                    "alertText2": "文字以下にしてください"
                 },
                 "min": {
                     "regex": "none",
@@ -72,7 +68,7 @@
                 },
                 "equals": {
                     "regex": "none",
-                    "alertText": "* 確認入力と一致しません"
+                    "alertText": "* 入力された値が一致しません"
                 },
                 "creditCard": {
                     "regex": "none",
@@ -86,7 +82,7 @@
                 "email": {
                     // Shamelessly lifted from Scott Gonzalez via the Bassistance Validation plugin http://projects.scottsplayground.com/email_address_validation/
                     "regex": /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
-                    "alertText": "* 正しくご入力ください"
+                    "alertText": "* メールアドレスが正しくありません"
                 },
                 "integer": {
                     "regex": /^[\-\+]?\d+$/,
@@ -141,18 +137,6 @@
                 },
                 "validate2fields": {
                     "alertText": "* 『HELLO』と入力してください"
-                },
-                "furigana": {
-                    "regex": /^[ァ-ン　\s]+/,
-                    "alertText": "* 全角カナ64文字以内でご入力ください"
-                },
-                "cardset": {
-                    "regex": /4980|5279|6900/,
-                    "alertText": "* 会員番号（カード番号）を正しくご入力ください"
-                },
-                "zenkaku": {
-                    "regex": /^[^0-9a-zA-z.\s!"#$%&'()*+,\-.\/:;<=>? @[\]\^_ `{|}~｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ]+$/,
-                    "alertText": "* 全角（英数字・記号を含む）で入力してください"
                 }
             };
             
